@@ -309,15 +309,18 @@ Dans une architecture typique Angular, le dossier src est organisé de la maniè
 Un DTO (Data Transfer Object) est une interface ou une classe utilisée pour définir la structure des données échangées entre le frontend et le backend. Cela permet de :
 
    - Clarifier la structure des données : Vous savez exactement quelles propriétés sont disponibles.
-    - Faciliter l'autocomplétion : Avec TypeScript, l'IDE propose les propriétés des objets.
-    - Réduire les erreurs : Le compilateur vérifie les types pour vous.
-    - Rendre le code plus lisible : Grosso modo c'est plus clean entre le back et le front.
+
+ - Faciliter l'autocomplétion : Avec TypeScript, l'IDE propose les propriétés des objets.
+
+  - Réduire les erreurs : Le compilateur vérifie les types pour vous.
+    
+ - Rendre le code plus lisible : Grosso modo c'est plus clean entre le back et le front.
      
 Pour ce mini projet, nous avons 4 DTOs principaux :
 
-   - UserDtoWithArticle : Représente un utilisateur
+   - UserDto: Représente un utilisateur
    - ArticleDto : Représente un Article
-   - UserDto : Représente un utilisateur avec ses articles.
+   - UserDtoWithArticles : Représente un utilisateur avec ses articles.
    - UserCreateDto : Représente les données nécessaires pour créer un utilisateur
 
 Fichier : ```Fichier : /models/example.dto.ts```
