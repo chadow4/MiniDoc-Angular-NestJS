@@ -7,38 +7,50 @@ NestJS est un framework Node.js pour construire des applications côté serveur 
 ## 2. 2. Qu'est-ce qu'Angular ?
 Angular est un framework de développement côté client utilisé pour créer des applications web interactives. Écrit en TypeScript, il suit une architecture basée sur les composants et est parfait pour intégrer avec une API comme NestJS.
 
-## 3. Pré-requis
-Avant de commencer :
-Installez Node.js (version LTS recommandée).
-Téléchargez et installez depuis Node.js.
-Vérifiez l'installation :
+# Pré-requis
 
-```
+Avant de commencer, assurez-vous de compléter les étapes suivantes :
+
+## 1. Installer Node.js
+- Téléchargez et installez **Node.js** (version LTS recommandée) depuis le site officiel : [Node.js](https://nodejs.org).
+- Vérifiez l'installation en exécutant les commandes suivantes dans un terminal :
+
+```bash
 node -v
 npm -v
-
 ```
-Installez NestJS CLI pour créer des projets backend :
 
+## 2. Installer les CLI nécessaires
+- Installez **NestJS CLI** pour créer des projets backend :
 
-```npm install -g @nestjs/cli```
+```bash
+npm install -g @nestjs/cli
+```
+puis pour lancer 
+```bash
+nest start
+```
 
+- Installez **Angular CLI** pour créer des projets frontend :
 
-Installez Angular CLI pour créer des projets frontend :
+```bash
+npm install -g @angular/cli
+```
+puis pour lancer 
+```
+ng serve
+```
 
+## 3. Configurer une base de données MySQL
+1. Téléchargez et installez **MySQL** sur votre machine.
+2. Créez une base de données nommée `projectdb`.
 
-``` npm install -g @angular/cli```
+## 4. Installer un IDE
+- Utilisez un IDE comme **IntelliJ IDEA**, **WebStorm**, ou **Visual Studio Code** :
+  - Ajoutez le plugin Angular pour le frontend.
+  - Ajoutez le plugin NestJS pour le backend.
+  - *(Note : IntelliJ IDEA et WebStorm intègrent ces plugins par défaut).*
 
-
-Configurez une base de données MySQL :
- - Téléchargez et installez MySQL sur votre machine.
- - Créez une base de données projectdb.
-
-Installez un IDE comme IntelliJ IDEA, WebStorm, ou Visual Studio Code, avec :
-- Plugin Angular pour le frontend.
-- Plugin NestJS pour le backend.
-  
-(Intelij & Webstorm ont par défaut déjà ces plugins)
 
 ## 4. Concepts de Base
 Backend : NestJS
@@ -58,74 +70,20 @@ Backend : NestJS
       - Une entité représente un modèle de données (exemple : User, Article).
       - Utilisée avec TypeORM pour gérer la base de données.
 
-Documentation Complète Angular + NestJS : Tout Depuis le Début
-Introduction
-1. Qu'est-ce que NestJS ?
 
-NestJS est un framework Node.js pour construire des applications côté serveur robustes, évolutives et bien structurées. Il utilise TypeScript par défaut et suit une architecture inspirée de MVC (Modèle-Vue-Contrôleur) combinée avec les concepts modernes comme les modules et les décorateurs.
-2. Qu'est-ce qu'Angular ?
-
-Angular est un framework de développement côté client utilisé pour créer des applications web interactives. Écrit en TypeScript, il suit une architecture basée sur les composants et est parfait pour intégrer avec une API comme NestJS.
-3. Pré-requis
-
-Avant de commencer :
-
-- Installez Node.js (version LTS recommandée).
-- Téléchargez et installez depuis Node.js.
-- Vérifiez l'installation :
-```
-node -v
-npm -v
-```
-
-Installez NestJS CLI pour créer des projets backend :
-
-npm install -g @nestjs/cli
-
-Installez Angular CLI pour créer des projets frontend :
-
-    npm install -g @angular/cli
-
-    Configurez une base de données MySQL :
-        Téléchargez et installez MySQL sur votre machine.
-        Créez une base de données projectdb.
-
-    Installez un IDE comme IntelliJ IDEA, WebStorm, ou Visual Studio Code, avec :
-        Plugin Angular pour le frontend.
-        Plugin NestJS pour le backend.
-
-4. Concepts de Base
-Backend : NestJS
-
-```
-    Module :
-        Un module dans NestJS regroupe des fonctionnalités spécifiques (exemple : UserModule gère tout ce qui concerne les utilisateurs).
-        C'est une unité logique qui contient des services, contrôleurs et entités.
-
-    Service :
-        Un service est utilisé pour encapsuler la logique métier (exemple : accès à la base de données, calculs, etc.).
-        Les services sont injectables dans d'autres parties de l'application.
-
-    Contrôleur :
-        Un contrôleur gère les requêtes entrantes et retourne une réponse. Il agit comme un pont entre l'utilisateur et le service.
-
-    Entité :
-        Une entité représente un modèle de données (exemple : User, Article).
-        Utilisée avec TypeORM pour gérer la base de données.
-```
 Frontend : Angular
-```
-    Composant :
+
+   -  Composant :
         Un composant est une unité visuelle de l'interface utilisateur.
         Chaque composant a une logique (.ts), un modèle (.html), et un style (.css ou .scss).
 
-    Service :
+   -  Service :
         Un service dans Angular est similaire à NestJS. Il est utilisé pour encapsuler la logique métier, comme les appels HTTP.
 
-    Template :
+   - Template :
         Les templates Angular définissent ce qui est affiché dans le navigateur.
         Avec Angular 17, des nouvelles syntaxes comme @for et @if simplifient le rendu conditionnel.
-```
+
 
 ## 5. Étape 1 : Initialiser le Backend
 
@@ -601,3 +559,8 @@ const routes: Routes = [
   { path: '**', redirectTo: '/users' },
 ];
 ```
+## Petit tips
+Avec **JetBrains** (IntelliJ IDEA, WebStorm), vous pouvez faire un clic droit sur un dossier et générer des Angular Schématics (composants, services ou autres fichiers nécessaires automatiquement). Cela simplifie et accélère le développement !
+![image](https://github.com/user-attachments/assets/ef9cb90c-5f35-4f8e-a2b4-89ac2448d080)
+![image](https://github.com/user-attachments/assets/13787be5-f4d9-4cc9-b37d-2ae713fb2ce3)
+
