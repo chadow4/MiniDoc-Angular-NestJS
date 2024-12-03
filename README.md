@@ -20,15 +20,16 @@ npm -v
 ```
 Installez NestJS CLI pour créer des projets backend :
 
-```
-npm install -g @nestjs/cli
-```
+
+```npm install -g @nestjs/cli```
+
 
 Installez Angular CLI pour créer des projets frontend :
 
-```
-npm install -g @angular/cli
-```
+
+``` npm install -g @angular/cli```
+
+
 Configurez une base de données MySQL :
  - Téléchargez et installez MySQL sur votre machine.
  - Créez une base de données projectdb.
@@ -42,20 +43,20 @@ Installez un IDE comme IntelliJ IDEA, WebStorm, ou Visual Studio Code, avec :
 ## 4. Concepts de Base
 Backend : NestJS
 
-    Module :
-        Un module dans NestJS regroupe des fonctionnalités spécifiques (exemple : UserModule gère tout ce qui concerne les utilisateurs).
-        C'est une unité logique qui contient des services, contrôleurs et entités.
+   - Module :
+        - Un module dans NestJS regroupe des fonctionnalités spécifiques (exemple : UserModule gère tout ce qui concerne les utilisateurs).
+        - C'est une unité logique qui contient des services, contrôleurs et entités.
 
-    Service :
-        Un service est utilisé pour encapsuler la logique métier (exemple : accès à la base de données, calculs, etc.).
-        Les services sont injectables dans d'autres parties de l'application.
+   - Service :
+        - Un service est utilisé pour encapsuler la logique métier (exemple : accès à la base de données, calculs, etc.).
+        - Les services sont injectables dans d'autres parties de l'application.
 
-    Contrôleur :
-        Un contrôleur gère les requêtes entrantes et retourne une réponse. Il agit comme un pont entre l'utilisateur et le service.
+   - Contrôleur :
+        - Un contrôleur gère les requêtes entrantes et retourne une réponse. Il agit comme un pont entre l'utilisateur et le service.
 
-    Entité :
-        Une entité représente un modèle de données (exemple : User, Article).
-        Utilisée avec TypeORM pour gérer la base de données.
+   - Entité :
+      - Une entité représente un modèle de données (exemple : User, Article).
+      - Utilisée avec TypeORM pour gérer la base de données.
 
 Documentation Complète Angular + NestJS : Tout Depuis le Début
 Introduction
@@ -69,12 +70,13 @@ Angular est un framework de développement côté client utilisé pour créer de
 
 Avant de commencer :
 
-    Installez Node.js (version LTS recommandée).
-    Téléchargez et installez depuis Node.js.
-    Vérifiez l'installation :
-
+- Installez Node.js (version LTS recommandée).
+- Téléchargez et installez depuis Node.js.
+- Vérifiez l'installation :
+```
 node -v
 npm -v
+```
 
 Installez NestJS CLI pour créer des projets backend :
 
