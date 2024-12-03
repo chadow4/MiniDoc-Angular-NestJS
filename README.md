@@ -69,13 +69,12 @@ Angular est un framework de développement côté client utilisé pour créer de
 
 Avant de commencer :
 
-   - Installez Node.js (version LTS recommandée).
-   - Téléchargez et installez depuis Node.js.
-   -  Vérifiez l'installation :
-```
+    Installez Node.js (version LTS recommandée).
+    Téléchargez et installez depuis Node.js.
+    Vérifiez l'installation :
+
 node -v
 npm -v
-```
 
 Installez NestJS CLI pour créer des projets backend :
 
@@ -191,7 +190,7 @@ export class Article {
   @Column()
   content: string;
 
-  @ManyToOne(() => User, (user) => user.articles, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.articles, { eager: true, onDelete: 'CASCADE' })
   user: User;
 }
 ```
@@ -274,7 +273,7 @@ export class UserController {
 
 ```
 ### Consommation de l'API
-- 1. Récupérer tous les utilisateurs avec leurs articles
+- 1. Récupérer tous les utilisateurs
      URL : GET http://localhost:3000/users
 ```json
 [
@@ -326,3 +325,277 @@ body à envoyer :
 
 ```
      
+## 5. Etape 2 : Initialisation du Front-end 
+
+### Créer le projet Angular 
+```
+ng new frontend
+cd frontend
+```
+
+Dans une architecture typique Angular, le dossier src est organisé de la manière suivante :
+
+   - /services : Contient les services Angular pour gérer la logique métier et les appels aux APIs.
+   - /interceptors : Regroupe les intercepteurs HTTP, utilisés pour modifier ou intercepter les requêtes et réponses HTTP.
+   - /guards : Contient les gardes de route, utilisés pour gérer les permissions d'accès aux différentes routes de l'application.
+   - /pages : Inclut les composants spécifiques à chaque page de l'application (par exemple, les pages utilisateurs ou tableaux de bord).
+   - /models : Définit les interfaces et classes modèles utilisées pour structurer les données dans l'application (DTOs).
+
+![image](https://github.com/user-attachments/assets/471800d2-98ac-47f3-83a0-071ee0909dfb)
+
+
+### Création des DTO : 
+
+Un DTO (Data Transfer Object) est une interface ou une classe utilisée pour définir la structure des données échangées entre le frontend et le backend. Cela permet de :
+
+   - Clarifier la structure des données : Vous savez exactement quelles propriétés sont disponibles.
+    - Faciliter l'autocomplétion : Avec TypeScript, l'IDE propose les propriétés des objets.
+    - Réduire les erreurs : Le compilateur vérifie les types pour vous.
+    - Rendre le code plus lisible : Grosso modo c'est plus clean entre le back et le front.
+     
+Pour ce mini projet, nous avons 4 DTOs principaux :
+
+   - UserDtoWithArticle : Représente un utilisateur
+   - ArticleDto : Représente un Article
+   - UserDto : Représente un utilisateur avec ses articles.
+   - UserCreateDto : Représente les données nécessaires pour créer un utilisateur
+
+Fichier : ```Fichier : /models/example.dto.ts```
+
+```ts
+sexport interface ArticleDto {
+  id: number;
+  title: string;
+  content: string;
+}
+
+export interface UserDto {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface UserDtoWithArticles {
+  id: number;
+  name: string;
+  email: string;
+  articles: ArticleDto[];
+}
+
+export interface UserCreateDto {
+  name: string;
+  email: string;
+}
+
+```
+
+
+### Création du Service Angular
+
+Le service Angular gère les appels API et utilise les DTOs pour définir les données échangées avec le backend.
+
+Fichier : ```/services/users.service.ts```
+```ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  private baseUrl = 'http://localhost:3000/users';
+
+  constructor(private http: HttpClient) {}
+
+  getUsers(): Observable<UserDto[]> {
+    return this.http.get<UserDto[]>(this.baseUrl);
+  }
+
+  getUserById(id: number): Observable<UserDtWithArticles> {
+    return this.http.get<UserDtoWithArticles>(`${this.baseUrl}/${id}`);
+  }
+
+  createUser(user: UserCreateDto): Observable<void> {
+    return this.http.post<void>(this.baseUrl, user);
+  }
+}
+
+```
+
+### Composants Angular
+
+#### Composant Liste des Utilisateurs + Création 
+
+Explications :
+
+   - Injection de Service :
+    Dans Angular, les services sont injectés dans le constructeur du composant. Ici, nous injectons UserService via private userService: UserService. Cela nous permet d'accéder aux méthodes du service pour récupérer ou envoyer des données.
+   
+   - Utilisation des Observables :
+   
+   Les méthodes du service, comme getUsers() ou createUser(), retournent des Observable. Nous devons souscrire (subscribe) à ces observables pour déclencher leur exécution et récupérer les données.
+   
+   - Méthodologie :
+        Lors de l'initialisation du composant (ngOnInit), on appelle loadUsers pour charger les utilisateurs.
+        Lorsqu'un utilisateur est ajouté via addUser(), la liste est rechargée après que l'ajout soit terminé.
+
+
+Fichier : ```/pages/user/user.component.ts```
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
+import { UserDto, UserCreateDto } from '../dto/user.dto';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+})
+export class UserComponent implements OnInit {
+  users: UserDto[] = []; 
+  newUser: UserCreateDto = { name: '', email: '' }; 
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.userService.getUsers().subscribe((data) => {
+      this.users = data;
+    });
+  }
+
+  addUser() {
+    this.userService.createUser(this.newUser).subscribe(() => {
+      this.loadUsers(); // Recharger la liste
+      this.newUser = { name: '', email: '' }; 
+    });
+  }
+}
+```
+
+
+
+Fichier : ```/pages/user/user.component.html```
+
+Le routerLink est une directive Angular utilisée pour configurer une navigation interne dans une application Angular. Elle permet de générer des liens qui redirigent vers des routes définies dans le fichier de configuration des routes.
+Dans cet exemple, chaque utilisateur affiché dans la liste aura un lien cliquable. Ce lien redirigera vers une page affichant les détails de l'utilisateur sélectionné.
+
+```html
+<h2>Liste des utilisateurs</h2>
+<ul>
+  <li *ngFor="let user of users">
+    <a [routerLink]="['/users', user.id]">
+      <strong>{{ user.name }}</strong> - {{ user.email }}
+    </a>
+  </li>
+</ul>
+
+<h3>Ajouter un utilisateur</h3>
+<form (ngSubmit)="addUser()">
+  <label for="name">Nom :</label>
+  <input id="name" [(ngModel)]="newUser.name" name="name" required />
+
+  <label for="email">Email :</label>
+  <input id="email" [(ngModel)]="newUser.email" name="email" required />
+
+  <button type="submit">Ajouter</button>
+</form>
+
+
+```
+
+### Composant : Détails d'un utilisateur
+
+Explications :
+
+   - Utilisation d'ActivatedRoute :
+    Angular fournit le service ActivatedRoute pour accéder aux paramètres de l'URL. Ici, nous utilisons this.route.snapshot.params['id'] pour récupérer l'id de l'utilisateur depuis l'URL.
+   -  Observable :
+    La méthode getUserById du service retourne un observable. Nous nous abonnons (subscribe) pour obtenir les données de l'utilisateur.
+
+Fichier : ```/pages/user-detail/user-detail.component.ts```
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../user.service';
+import { UserDto } from '../dto/user.dto';
+
+@Component({
+  selector: 'app-user-detail',
+  templateUrl: './user-detail.component.html',
+})
+export class UserDetailComponent implements OnInit {
+  user: UserDtoWithArticles | null = null;
+
+constructor(
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {}
+
+  ngOnInit() {
+    const userId = this.route.snapshot.params['id'];
+    this.loadUser(userId);
+  }
+
+  loadUser(id: number) {
+    this.userService.getUserById(id).subscribe((data) => {
+      this.user = data;
+    });
+  }
+}
+
+```
+
+Fichier : ```/pages/user-detail/user-detail.component.html```
+
+```html
+@if (user) {
+  <h2>Détails de l'utilisateur</h2>
+  <p><strong>Nom :</strong> {{ user.name }}</p>
+  <p><strong>Email :</strong> {{ user.email }}</p>
+
+  <h3>Articles écrits</h3>
+  <ul>
+    @for (let article of user.articles; track article.id) {
+      <li>
+        <h4>{{ article.title }}</h4>
+        <p>{{ article.content }}</p>
+      </li>
+    }
+    @empty {
+      <li>Aucun article trouvé</li>
+    }
+  </ul>
+} @else {
+  <p>Chargement...</p>
+}
+
+```
+
+### Configuration des routes :
+
+Explications :
+
+   -  Routage :
+    Le tableau routes contient la définition des routes. Pour chaque route, nous spécifions :
+        - path : le chemin de l'URL.
+        - component : le composant à afficher lorsque cette route est active.
+    - Redirections :
+        - La route par défaut (path: '') redirige vers /users.
+        - Une route "wildcard" (path: '**') redirige toutes les routes inconnues vers /users.
+
+
+Fichier : ```/src/app.routes.ts```
+```ts
+const routes: Routes = [
+  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: 'users', component: UserComponent },
+  { path: 'users/:id', component: UserDetailComponent},
+  { path: '**', redirectTo: '/users' },
+];
+```
