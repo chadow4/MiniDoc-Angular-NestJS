@@ -69,12 +69,13 @@ Angular est un framework de développement côté client utilisé pour créer de
 
 Avant de commencer :
 
-    Installez Node.js (version LTS recommandée).
-    Téléchargez et installez depuis Node.js.
-    Vérifiez l'installation :
-
+   - Installez Node.js (version LTS recommandée).
+   - Téléchargez et installez depuis Node.js.
+   -  Vérifiez l'installation :
+```
 node -v
 npm -v
+```
 
 Installez NestJS CLI pour créer des projets backend :
 
@@ -190,7 +191,7 @@ export class Article {
   @Column()
   content: string;
 
-  @ManyToOne(() => User, (user) => user.articles, { eager: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.articles, { onDelete: 'CASCADE' })
   user: User;
 }
 ```
