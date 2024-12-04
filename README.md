@@ -1,17 +1,40 @@
 # MiniDoc-Angular-NestJS
 
-## 1. Qu'est-ce que NestJS ?
+## Qu'est-ce que NestJS ?
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f06933ec-03bd-4005-b878-846cd81c4d65" alt="Description de l'image" width="50%">
+</div>
+
+
 
 NestJS est un framework Node.js pour construire des applications côté serveur robustes, évolutives et bien structurées. Il utilise TypeScript par défaut et suit une architecture inspirée de MVC (Modèle-Vue-Contrôleur) combinée avec les concepts modernes comme les modules et les décorateurs.
 
-## 2. 2. Qu'est-ce qu'Angular ?
+##  Qu'est-ce qu'Angular ?
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/83770971-fb7d-4b7d-9437-5fd6a13833dc" alt="Description de l'image" width="50%">
+</div>
+
+
+
 Angular est un framework de développement côté client utilisé pour créer des applications web interactives. Écrit en TypeScript, il suit une architecture basée sur les composants et est parfait pour intégrer avec une API comme NestJS.
+
+## Autres ressources: 
+
+Documentation officielle d'Angular : https://angular.dev et https://angular.fr <br>
+Documentation officielle de NestJS : https://nestjs.com et https://nestjs.fr
 
 # Pré-requis
 
 Avant de commencer, assurez-vous de compléter les étapes suivantes :
 
 ## 1. Installer Node.js
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/61b60c73-0008-432a-a00d-e6223c7b39ff" alt="Description de l'image" width="35%">
+</div>
+
+
+
 - Téléchargez et installez **Node.js** (version LTS recommandée) depuis le site officiel : [Node.js](https://nodejs.org).
 - Vérifiez l'installation en exécutant les commandes suivantes dans un terminal :
 
@@ -42,10 +65,21 @@ ng serve
 ```
 
 ## 3. Configurer une base de données MySQL
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/6d36a794-7316-49f8-81cf-26ec4e4331be" alt="Description de l'image" width="50%">
+</div>
+
+
 1. Téléchargez et installez **MySQL** sur votre machine.
 2. Créez une base de données nommée `projectdb`.
 
 ## 4. Installer un IDE
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/6da5bda9-258c-4cc6-a24e-9db4cf7084ad" alt="Description de l'image" width="50%">
+</div>
+
 - Utilisez un IDE comme **IntelliJ IDEA**, **WebStorm**, ou **Visual Studio Code** :
   - Ajoutez le plugin Angular pour le frontend.
   - Ajoutez le plugin NestJS pour le backend.
@@ -53,7 +87,13 @@ ng serve
 
 
 ## 4. Concepts de Base
-Backend : NestJS
+
+
+### Backend : NestJS
+
+<div align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:640/0*KikwdypTj1FVSpB2.png" alt="Description de l'image" width="50%">
+</div>
 
    - Module :
         - Un module dans NestJS regroupe des fonctionnalités spécifiques (exemple : UserModule gère tout ce qui concerne les utilisateurs).
@@ -71,7 +111,12 @@ Backend : NestJS
       - Utilisée avec TypeORM pour gérer la base de données.
 
 
-Frontend : Angular
+### Frontend : Angular
+
+<div align="center">
+  <img src="https://v2.angular.io/resources/images/devguide/architecture/overview2.png" alt="Description de l'image" width="50%">
+</div>
+
 
    -  Composant :
         Un composant est une unité visuelle de l'interface utilisateur.
@@ -150,7 +195,7 @@ export class Article {
   @Column()
   content: string;
 
-  @ManyToOne(() => User, (user) => user.articles, { eager: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.articles)
   user: User;
 }
 ```
@@ -393,7 +438,12 @@ export class UserService {
 Explications :
 
    - Injection de Service :
-    Dans Angular, les services sont injectés dans le constructeur du composant. Ici, nous injectons UserService via private userService: UserService. Cela nous permet d'accéder aux méthodes du service pour récupérer ou envoyer des données.
+    Dans Angular, les services sont injectés dans le constructeur du composant. Ici, nous injectons UserService avec ```private userService: UserService```. Cela nous permet d'accéder aux méthodes du service pour récupérer ou envoyer des données.
+
+<div align="center">
+  <img src="https://v2.angular.io/resources/images/devguide/architecture/injector-injects.png" alt="Description de l'image" width="50%">
+</div>
+
    
    - Utilisation des Observables :
    
@@ -450,11 +500,16 @@ Dans cet exemple, chaque utilisateur affiché dans la liste aura un lien cliquab
 ```html
 <h2>Liste des utilisateurs</h2>
 <ul>
-  <li *ngFor="let user of users">
-    <a [routerLink]="['/users', user.id]">
-      <strong>{{ user.name }}</strong> - {{ user.email }}
-    </a>
-  </li>
+  @for (user of users; track user.id) {
+    <li>
+      <a [routerLink]="['/users', user.id]">
+        <strong>{{ user.name }}</strong> - {{ user.email }}
+      </a>
+    </li>
+  }
+  @empty {
+    <li>Aucun utilisateur trouvé.</li>
+  }
 </ul>
 
 <h3>Ajouter un utilisateur</h3>
@@ -566,4 +621,6 @@ const routes: Routes = [
 Avec **JetBrains** (IntelliJ IDEA, WebStorm), vous pouvez faire un clic droit sur un dossier et générer des Angular Schématics (composants, services ou autres fichiers nécessaires automatiquement). Cela simplifie et accélère le développement !
 ![image](https://github.com/user-attachments/assets/ef9cb90c-5f35-4f8e-a2b4-89ac2448d080)
 ![image](https://github.com/user-attachments/assets/13787be5-f4d9-4cc9-b37d-2ae713fb2ce3)
+
+
 
