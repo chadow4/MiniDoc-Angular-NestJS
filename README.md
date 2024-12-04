@@ -579,7 +579,7 @@ Fichier : ```/pages/user-detail/user-detail.component.html```
 
   <h3>Articles écrits</h3>
   <ul>
-    @for (let article of user.articles; track article.id) {
+    @for (article of user.articles; track article.id) {
       <li>
         <h4>{{ article.title }}</h4>
         <p>{{ article.content }}</p>
